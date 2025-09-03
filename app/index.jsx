@@ -1,12 +1,11 @@
-import { Button, StyleSheet, Text, TextInput, View, Image } from 'react-native'
-import React from 'react'
+import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 
 const index = () => {
   return (
     <View style={styles.container}>
       <Image source={require('../assets/images/topImage.png')}
       style={styles.Toplogo} />
-      <Text style={styles.title1}>APP NAME</Text>
+      <Text style={styles.title1}>WatchParty</Text>
       
       <View style={styles.loginCard}>
         <View style={styles.TopImageContainer}>
