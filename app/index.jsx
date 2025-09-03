@@ -137,13 +137,12 @@ const styles = StyleSheet.create({
 
   divider: {
   height: 1,
-  backgroundColor: '#2A2A2A', 
+  backgroundColor: '#FFFFFF', 
   width: '100%',
   marginVertical: 20
 }
 
 })
-  
 
 export default index
 
