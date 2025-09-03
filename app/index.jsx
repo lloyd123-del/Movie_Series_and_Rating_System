@@ -1,3 +1,4 @@
+import { Link } from 'expo-router'
 import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 
 const index = () => {
@@ -38,7 +39,9 @@ const index = () => {
 
         <Text style={styles.title5}>Don't have an Account?</Text>
 
-        <Button title="Create Account" color="#E50914" />
+        <Link href={'/signup'} asChild>
+          <Button title="Create Account" color="#E50914" />
+        </Link>
 
       </View>
     </View>

@@ -1,5 +1,5 @@
-import { Button, StyleSheet, Text, TextInput, View, Image } from 'react-native'
-import React from 'react'
+import { Link } from 'expo-router'
+import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 
 const signup = () => {
   return (
@@ -47,13 +47,18 @@ const signup = () => {
           secureTextEntry
         />
 
-        <Button title="Create Account" color="#E50914" />
+ 
+          <Button title="Create Account" color="#E50914" />
+
 
         <View style={styles.divider} />
 
         <Text style={styles.title5}>Already have an Account?</Text>
 
-        <Button title="Sign In" color="#E50914" />
+
+          <Link href="/" asChild>
+            <Button title="Sign In" color="#E50914" />
+          </Link>
 
       </View>
     </View>
