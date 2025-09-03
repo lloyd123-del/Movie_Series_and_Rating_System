@@ -6,7 +6,7 @@ const signup = () => {
     <View style={styles.container}>
       <Image source={require('../assets/images/topImage.png')}
       style={styles.Toplogo} />
-      <Text style={styles.title1}>APP NAME</Text>
+      <Text style={styles.title1}>WatchParty</Text>
       
       <View style={styles.loginCard}>
         <View style={styles.TopImageContainer}>
