@@ -1,66 +1,70 @@
-import { Link } from 'expo-router'
-import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Link, useRouter } from 'expo-router';
+import { useEffect, useRef } from 'react';
+import { Animated, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
-const signup = () => {
+
+const index = () => {
+const router = useRouter ();
+
+const opacity = useRef(new Animated.Value(0)).current;
+
+useEffect(() => {
+    Animated.timing(opacity,{
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+    }).start();
+}, []);
+
+
+
+
+const handleLogin = () => {
+  router.replace("/(tabs)/home");
+};
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/images/WatchPartyLogo.png')}
       style={styles.topLogo} />
       <Text style={styles.title1}>WatchParty</Text>
       
-      <View style={styles.loginCard}>
+      <Animated.View style={[styles.loginCard, {opacity}]}>
         <View style={styles.TopImageContainer}>
           <Image source={require('../assets/images/videologo.png')}
             style={styles.logo}
             />
         </View>  
-        <Text style={styles.title1}>Create Account</Text>
-        <Text style={styles.title2}>Sign in get started</Text>
-
-        <Text style={styles.title3}>Fullname</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your Full name"
-          placeholderTextColor="#A0A0A0"
-        />
+        <Text style={styles.title1}>Welcome Back!</Text>
+        <Text style={styles.title2}>Sign in to your account</Text>
 
         <Text style={styles.title3}>Email</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter your Email"
+          placeholder="Username"
           placeholderTextColor="#A0A0A0"
         />
 
         <Text style={styles.title3}>Password</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter your Password"
+          placeholder="Password"
           placeholderTextColor="#A0A0A0"
           secureTextEntry
         />
 
-        <Text style={styles.title3}>Confirm Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm your Password"
-          placeholderTextColor="#A0A0A0"
-          secureTextEntry
-        />
+        <Button title="Login" color="#E50914" onPress={handleLogin}/>
 
- 
-          <Button title="Create Account" color="#E50914" />
-
-
+        <Text style={styles.title4}>Forgot your Password?</Text>
         <View style={styles.divider} />
 
-        <Text style={styles.title5}>Already have an Account?</Text>
+        <Text style={styles.title5}>Don't have an Account?</Text>
 
+        <Link href={'/signup'} asChild>
+          <Button title="Create Account" color="#E50914" />
+        </Link>
 
-          <Link href="/login" asChild>
-            <Button title="Sign In" color="#E50914" />
-          </Link>
-
-      </View>
+      </Animated.View>
     </View>
   )
 }
@@ -74,16 +78,15 @@ const styles = StyleSheet.create({
   },
 
   topLogo: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     justifyContent: "center", 
-    alignItems: "center", 
-    marginTop: 30,    
+    alignItems: "center",     
   },
 
   loginCard: {
     width: 321,
-    height: 660,
+    height: 605,
     padding: 20,
     backgroundColor: '#1A1A1A', 
     borderRadius: 30,
@@ -106,15 +109,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 5,
-    textAlign: 'center',
-    
+    textAlign: 'center'
   },
 
     title2: {
     color: '#A0A0A0',
     fontSize: 10,
     fontWeight: 'bold',
-    marginBottom: 40,
+    marginBottom: 60,
     textAlign: 'center'
   },
 
@@ -164,6 +166,7 @@ const styles = StyleSheet.create({
 }
 
 })
-  
 
-export default signup
+export default index
+
+
