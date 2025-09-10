@@ -1,16 +1,21 @@
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 
 const index = () => {
+const router = useRouter ();
+const handleLogin = () => {
+  router.replace("/(tabs)/home");
+};
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/images/topImage.png')}
-      style={styles.Toplogo} />
+      style={styles.topLogo} />
       <Text style={styles.title1}>WatchParty</Text>
       
       <View style={styles.loginCard}>
         <View style={styles.TopImageContainer}>
-          <Image source={require('../assets/images/25311.png')}
+          <Image source={require('../assets/images/popcorns.png')}
             style={styles.logo}
             />
         </View>  
@@ -32,7 +37,8 @@ const index = () => {
           secureTextEntry
         />
 
-        <Button title="Login" color="#E50914" />
+        <Button title="Login" color="#E50914" 
+        onPress={handleLogin}/>
 
         <Text style={styles.title4}>Forgot your Password?</Text>
         <View style={styles.divider} />
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'        
   },
 
-  Toplogo: {
+  TopLogo: {
     width: 100,
     height: 100,
     justifyContent: "center", 
