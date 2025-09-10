@@ -4,13 +4,13 @@ import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native'
 const signup = () => {
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/topImage.png')}
-      style={styles.Toplogo} />
+      <Image source={require('../assets/images/topImagelogo.png')}
+      style={styles.topLogo} />
       <Text style={styles.title1}>WatchParty</Text>
       
       <View style={styles.loginCard}>
         <View style={styles.TopImageContainer}>
-          <Image source={require('../assets/images/25311.png')}
+          <Image source={require('../assets/images/videologo.png')}
             style={styles.logo}
             />
         </View>  
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'        
   },
 
-  Toplogo: {
+  topLogo: {
     width: 100,
     height: 100,
     justifyContent: "center", 

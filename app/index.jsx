@@ -9,13 +9,13 @@ const handleLogin = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/topImage.png')}
+      <Image source={require('../assets/images/topImagelogo.png')}
       style={styles.topLogo} />
       <Text style={styles.title1}>WatchParty</Text>
       
       <View style={styles.loginCard}>
         <View style={styles.TopImageContainer}>
-          <Image source={require('../assets/images/popcorns.png')}
+          <Image source={require('../assets/images/videologo.png')}
             style={styles.logo}
             />
         </View>  
@@ -37,8 +37,7 @@ const handleLogin = () => {
           secureTextEntry
         />
 
-        <Button title="Login" color="#E50914" 
-        onPress={handleLogin}/>
+        <Button title="Login" color="#E50914" onPress={handleLogin}/>
 
         <Text style={styles.title4}>Forgot your Password?</Text>
         <View style={styles.divider} />
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'        
   },
 
-  TopLogo: {
+  topLogo: {
     width: 100,
     height: 100,
     justifyContent: "center", 
