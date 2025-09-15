@@ -1,15 +1,6 @@
 import { Stack } from "expo-router";
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-  Animated,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import {  View,  Text,  StyleSheet,  TouchableOpacity, Dimensions, Animated, SafeAreaView,} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
@@ -41,12 +32,11 @@ export default function Layout() {
   };
 
   const menuItems = [
-    { id: 1, title: "Account Management", icon: "person-outline" },
-    { id: 2, title: "Notifications", icon: "notifications-outline" },
-    { id: 3, title: "Privacy & Security", icon: "lock-closed-outline" },
-    { id: 4, title: "Terms & Condition", icon: "newspaper-outline" },
-    { id: 5, title: "Help & Support", icon: "help-circle-outline" },
-    { id: 6, title: "About", icon: "information-circle-outline" },
+    { id: 1, title: "Watchlist", icon: "clipboard-outline" },
+    { id: 2, title: "Liked", icon: "thumbs-up-outline" },
+    { id: 3, title: "Account", icon: "person-outline" },
+    { id: 4, title: "App Settings", icon: "settings-outline" },
+    { id: 5, title: "Help", icon: "help-circle-outline" },
   ];
 
   return (
@@ -65,17 +55,12 @@ export default function Layout() {
           },
           headerShadowVisible: false,
 
-          // ✅ Hamburger menu on left
           headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => setIsPanelOpen(true)}
-              style={{ marginLeft: 15 }}
-            >
+            <TouchableOpacity style={{ marginLeft: 15 }}>
               <Ionicons name="menu-outline" size={28} color="#fff" />
             </TouchableOpacity>
           ),
 
-          // ✅ Search + User icons on right
           headerRight: () => (
             <View style={styles.headerRight}>
               <TouchableOpacity
@@ -85,7 +70,7 @@ export default function Layout() {
                 <Ionicons name="search-outline" size={24} color="#fff" />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => console.log("User pressed")}
+                onPress={() => setIsPanelOpen(true)}
                 style={styles.iconButton}
               >
                 <Ionicons name="person-circle-outline" size={28} color="#fff" />
@@ -109,46 +94,49 @@ export default function Layout() {
         style={[styles.panel, { transform: [{ translateX: panelPosition }] }]}
       >
         <SafeAreaView style={styles.panelContent}>
-          {/* Panel Header */}
+          {/* Header with Back + Title */}
           <View style={styles.panelHeader}>
-            <Text style={styles.panelTitle}>Settings</Text>
             <TouchableOpacity
               onPress={() => setIsPanelOpen(false)}
-              style={styles.closeButton}
+              style={{ padding: 4 }}
             >
-              <Ionicons name="close" size={24} color="#E50914" />
+              <Ionicons name="arrow-back" size={24} color="#fff" />
             </TouchableOpacity>
+            <Text style={styles.headerTitle}>WatchParty</Text>
+            <View style={{ width: 24 }} /> 
           </View>
 
-          {/* Menu Items */}
-          <ScrollView style={styles.menuItems}>
+          {/* Profile Section */}
+          <View style={styles.profileSection}>
+            <Ionicons name="person-circle" size={80} color="limegreen" />
+            <Text style={styles.username}>Username</Text>
+          </View>
+
+          {/* Menu List */}
+          <View style={styles.menuList}>
             {menuItems.map((item) => (
               <TouchableOpacity
                 key={item.id}
                 style={styles.menuItem}
                 onPress={() => console.log(`${item.title} pressed`)}
               >
-                <Ionicons
-                  name={item.icon}
-                  size={22}
-                  color="#E50914"
-                  style={styles.menuIcon}
-                />
-                <Text style={styles.menuText}>{item.title}</Text>
+                <View style={styles.menuLeft}>
+                  <Ionicons name={item.icon} size={22} color="#fff" />
+                  <Text style={styles.menuText}>{item.title}</Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#fff" />
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </View>
 
-          {/* Footer */}
+          {/* Footer Logout Button */}
           <View style={styles.footer}>
             <TouchableOpacity
               style={styles.logoutButton}
               onPress={handleLogout}
             >
-              <Ionicons name="log-out-outline" size={22} color="#fff" />
-              <Text style={styles.logoutText}>Log Out</Text>
+              <Text style={styles.logoutText}>Log out</Text>
             </TouchableOpacity>
-            <Text style={styles.versionText}>All rights reserved</Text>
           </View>
         </SafeAreaView>
       </Animated.View>
@@ -179,42 +167,57 @@ const styles = StyleSheet.create({
   panelContent: { flex: 1 },
   panelHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "space-between",
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#333",
+    backgroundColor: "#111",
   },
-  panelTitle: { fontSize: 20, fontWeight: "bold", color: "#fff" },
-  closeButton: { padding: 4 },
-  menuItems: { flex: 1, paddingVertical: 16 },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#E50914",
+  },
+  profileSection: {
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  username: { fontSize: 16, fontWeight: "600", color: "#fff", marginTop: 8 },
+  menuList: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
   menuItem: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#1A1A1A",
     paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 12,
   },
-  menuIcon: { marginRight: 16, width: 24 },
-  menuText: { fontSize: 16, color: "#fff" },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  menuText: {
+    fontSize: 16,
+    color: "#fff",
+    marginLeft: 12,
+  },
   footer: {
     padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: "#333",
     alignItems: "center",
   },
   logoutButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#E50914",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    alignItems: "center",
     width: "100%",
-    marginBottom: 12,
   },
-  logoutText: { color: "#fff", fontSize: 16, fontWeight: "600", marginLeft: 8 },
-  versionText: { fontSize: 12, color: "#999" },
+  logoutText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 
   // ✅ Header Right Icons
   headerRight: {

@@ -1,5 +1,6 @@
 import { Link, useRouter } from 'expo-router';
 import { useEffect, useRef } from 'react';
+import { Ionicons } from "@expo/vector-icons";
 import { Animated, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
@@ -38,7 +39,7 @@ const handleLogin = () => {
         <Text style={styles.title1}>Welcome Back!</Text>
         <Text style={styles.title2}>Sign in to your account</Text>
 
-        <Text style={styles.title3}>Email</Text>
+        <Text style={styles.title3}>Email </Text>
         <TextInput
           style={styles.input}
           placeholder="Username"
