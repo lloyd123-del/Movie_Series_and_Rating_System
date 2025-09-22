@@ -1,14 +1,33 @@
 import { Stack } from "expo-router";
 import React, { useState, useEffect, useRef } from "react";
-import {  View,  Text,  StyleSheet,  TouchableOpacity, Dimensions, Animated, SafeAreaView,} from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  Animated,
+  SafeAreaView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+
+// ✅ Imports
+import SearchBar from "./searchbar";
+import SlideMenu from "./SlideMenu";
 
 const { width } = Dimensions.get("window");
 
 export default function Layout() {
   const router = useRouter();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  // ✅ NEW STATE: controls search overlay visibility
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // ✅ NEW STATE: controls menu overlay visibility
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const panelPosition = useRef(new Animated.Value(width)).current;
 
   useEffect(() => {
@@ -56,15 +75,20 @@ export default function Layout() {
           headerShadowVisible: false,
 
           headerLeft: () => (
-            <TouchableOpacity style={{ marginLeft: 15 }}>
+            // ✅ Opens SlideMenu
+            <TouchableOpacity
+              style={{ marginLeft: 15 }}
+              onPress={() => setIsMenuOpen(true)}
+            >
               <Ionicons name="menu-outline" size={28} color="#fff" />
             </TouchableOpacity>
           ),
 
           headerRight: () => (
             <View style={styles.headerRight}>
+              {/* ✅ search button now toggles SearchBar */}
               <TouchableOpacity
-                onPress={() => console.log("Search pressed")}
+                onPress={() => setIsSearchOpen(true)}
                 style={styles.iconButton}
               >
                 <Ionicons name="search-outline" size={24} color="#fff" />
@@ -80,7 +104,7 @@ export default function Layout() {
         }}
       />
 
-      {/* Side Panel Overlay */}
+      {/* Side Panel Overlay (User) */}
       {isPanelOpen && (
         <TouchableOpacity
           style={styles.overlay}
@@ -89,7 +113,7 @@ export default function Layout() {
         />
       )}
 
-      {/* Slide-in Panel */}
+      {/* ✅ User Slide-in Panel */}
       <Animated.View
         style={[styles.panel, { transform: [{ translateX: panelPosition }] }]}
       >
@@ -103,7 +127,7 @@ export default function Layout() {
               <Ionicons name="arrow-back" size={24} color="#fff" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>WatchParty</Text>
-            <View style={{ width: 24 }} /> 
+            <View style={{ width: 24 }} />
           </View>
 
           {/* Profile Section */}
@@ -140,6 +164,12 @@ export default function Layout() {
           </View>
         </SafeAreaView>
       </Animated.View>
+
+      {/* ✅ SlideMenu (Genres) */}
+      {isMenuOpen && <SlideMenu onClose={() => setIsMenuOpen(false)} />}
+
+      {/* ✅ Search overlay renders above everything */}
+      {isSearchOpen && <SearchBar onClose={() => setIsSearchOpen(false)} />}
     </>
   );
 }
@@ -157,12 +187,13 @@ const styles = StyleSheet.create({
   panel: {
     position: "absolute",
     top: 0,
-    right: 0,
     bottom: 0,
     width: width * 0.8,
     backgroundColor: "#0D0D0D",
     zIndex: 1000,
     elevation: 5,
+    right: 0,
+    marginTop: 25,
   },
   panelContent: { flex: 1 },
   panelHeader: {
@@ -229,51 +260,3 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
-
-
-
-
-
-{/* 
-  import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
-
-export default function TabsLayout() {
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "grey",
-      }}
-    >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "WatchParty",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
-          ),
-        }}
-      />
-  <Tabs.Screen
-        name="list"
-        options={{
-          title: "List",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="list-outline" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: "Settings",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color={color} />
-          ),
-        }}
-      />     
-   </Tabs>
-  ); 
-}  */ }
