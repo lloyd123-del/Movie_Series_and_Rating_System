@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 
-// ✅ Imports
+
 import SearchBar from "./searchbar";
 import SlideMenu from "./SlideMenu";
 
@@ -21,17 +21,16 @@ export default function Layout() {
   const router = useRouter();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
-  // ✅ NEW STATE: controls search overlay visibility
+  
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // ✅ NEW STATE: controls menu overlay visibility
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const panelPosition = useRef(new Animated.Value(width)).current;
 
   const HandleHome = () => {
-    setIsPanelOpen(false); // close the panel first
-    router.replace("/home"); // then navigate
+    setIsPanelOpen(false); 
+    router.replace("/home"); 
   };
 
   useEffect(() => {
@@ -51,7 +50,7 @@ export default function Layout() {
   }, [isPanelOpen]);
 
   const handleLogout = () => {
-    router.replace("/"); // back to login
+    router.replace("/"); 
   };
 
   const menuItems = [
@@ -64,7 +63,7 @@ export default function Layout() {
 
   return (
     <>
-      {/* ✅ Header & Screens */}
+
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: "#0D0D0D" },
@@ -78,7 +77,7 @@ export default function Layout() {
           headerShadowVisible: false,
 
           headerLeft: () => (
-            // ✅ Opens SlideMenu
+     
             <TouchableOpacity
               style={{ marginLeft: 15 }}
               onPress={() => setIsMenuOpen(true)}
@@ -89,7 +88,7 @@ export default function Layout() {
 
           headerRight: () => (
             <View style={styles.headerRight}>
-              {/* ✅ search button now toggles SearchBar */}
+    
               <TouchableOpacity
                 onPress={() => setIsSearchOpen(true)}
                 style={styles.iconButton}
@@ -107,9 +106,9 @@ export default function Layout() {
         }}
       />
 
-      {/* ✅ Overlay + Panel Wrapper */}
+     
       <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
-        {/* Overlay */}
+ 
         {isPanelOpen && (
           <TouchableOpacity
             style={styles.overlay}
@@ -118,12 +117,12 @@ export default function Layout() {
           />
         )}
 
-        {/* ✅ User Slide-in Panel */}
+     
         <Animated.View
           style={[styles.panel, { transform: [{ translateX: panelPosition }] }]}
         >
           <SafeAreaView style={styles.panelContent}>
-            {/* Header with Back + Title */}
+            
             <View style={styles.panelHeader}>
               <TouchableOpacity
                 onPress={() => setIsPanelOpen(false)}
@@ -141,13 +140,12 @@ export default function Layout() {
               <View style={{ width: 24 }} />
             </View>
 
-            {/* Profile Section */}
             <View style={styles.profileSection}>
               <Ionicons name="person-circle" size={80} color="limegreen" />
               <Text style={styles.username}>Username</Text>
             </View>
 
-            {/* Menu List */}
+        
             <View style={styles.menuList}>
               {menuItems.map((item) => (
                 <TouchableOpacity
@@ -164,7 +162,7 @@ export default function Layout() {
               ))}
             </View>
 
-            {/* Footer Logout Button */}
+ 
             <View style={styles.footer}>
               <TouchableOpacity
                 style={styles.logoutButton}
@@ -177,10 +175,10 @@ export default function Layout() {
         </Animated.View>
       </View>
 
-      {/* ✅ SlideMenu (Genres) */}
+  
       {isMenuOpen && <SlideMenu onClose={() => setIsMenuOpen(false)} />}
 
-      {/* ✅ Search overlay renders above everything */}
+     
       {isSearchOpen && <SearchBar onClose={() => setIsSearchOpen(false)} />}
     </>
   );

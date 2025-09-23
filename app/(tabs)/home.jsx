@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import {
   Dimensions,
   Image,
@@ -8,7 +9,13 @@ import {
   View,
 } from "react-native";
 
+
 const { width } = Dimensions.get("window");
+const router = useRouter();
+
+const handleReview = () => {
+  router.replace('/review')
+}
 
 const home = () => {
   return (
@@ -16,17 +23,20 @@ const home = () => {
       <View style={styles.contentBox}>
         {/* ✅ Hero Banner */}
         <View style={styles.heroContainer}>
-          <Image
-            source={require("../../assets/images/dexter.jpeg")}
-            style={styles.heroImage}
-            resizeMode="cover"
-          />
+          <TouchableOpacity onPress={handleReview}>
+            <Image
+              source={require("../../assets/images/dexter.jpeg")}
+              style={styles.heroImage}
+              resizeMode="cover"
+             
+            />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.watchlistButton}>
             <Text style={styles.watchlistText}>+ Add to Watchlist</Text>
           </TouchableOpacity>
         </View>
 
-        {/* ✅ Trending Now */}
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Trending Now</Text>
           <ScrollView
@@ -44,7 +54,7 @@ const home = () => {
           </ScrollView>
         </View>
 
-        {/* ✅ Movies you liked */}
+  
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Movies you liked</Text>
           <ScrollView
@@ -62,7 +72,7 @@ const home = () => {
           </ScrollView>
         </View>
 
-        {/* ✅ Recommended for you */}
+      
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Recommended for you</Text>
           <ScrollView
