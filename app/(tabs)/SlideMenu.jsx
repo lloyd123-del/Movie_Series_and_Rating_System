@@ -1,14 +1,15 @@
-import React, { useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-  Animated,
-  SafeAreaView,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from 'expo-router';
+import { useEffect, useRef } from "react";
+import {
+  Animated,
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const { width } = Dimensions.get("window");
 
@@ -41,6 +42,11 @@ export default function SlideMenu({ onClose }) {
       useNativeDriver: true,
     }).start(() => onClose && onClose());
   };
+  const router = useRouter();
+
+  const Handlegenre = () => {
+    router.replace("/genre");
+  }
 
   return (
     <>
@@ -71,7 +77,7 @@ export default function SlideMenu({ onClose }) {
               <TouchableOpacity
                 key={index}
                 style={styles.menuItem}
-                onPress={() => console.log(`${genre} selected`)}
+                onPress={Handlegenre}
               >
                 <Text style={styles.menuText}>{genre}</Text>
                 <Ionicons name="chevron-forward" size={20} color="#fff" />

@@ -1,16 +1,15 @@
-import { Stack } from "expo-router";
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-  Animated,
-  SafeAreaView,
-} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import { useEffect, useRef, useState } from "react";
+import {
+  Animated,
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 // ✅ Imports
 import SearchBar from "./searchbar";
@@ -29,6 +28,11 @@ export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const panelPosition = useRef(new Animated.Value(width)).current;
+
+  const HandleHome = () => {
+    setIsPanelOpen(false); // close the panel first
+    router.replace("/home"); // then navigate
+  };
 
   useEffect(() => {
     if (isPanelOpen) {
@@ -65,13 +69,12 @@ export default function Layout() {
         screenOptions={{
           headerStyle: { backgroundColor: "#0D0D0D" },
           headerTintColor: "#fff",
-          headerTitle: "WatchParty",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontWeight: "bold",
-            fontSize: 30,
-            color: "#E50914",
-          },
+          headerTitle: () => (
+            
+            <Text onPress={HandleHome} style={{fontSize:30, fontWeight: 'bold', color:"#E50914", textAlign: 'center', marginLeft: '25%' }}>
+              WatchParty
+            </Text>
+          ),
           headerShadowVisible: false,
 
           headerLeft: () => (
@@ -104,66 +107,75 @@ export default function Layout() {
         }}
       />
 
-      {/* Side Panel Overlay (User) */}
-      {isPanelOpen && (
-        <TouchableOpacity
-          style={styles.overlay}
-          onPress={() => setIsPanelOpen(false)}
-          activeOpacity={1}
-        />
-      )}
+      {/* ✅ Overlay + Panel Wrapper */}
+      <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+        {/* Overlay */}
+        {isPanelOpen && (
+          <TouchableOpacity
+            style={styles.overlay}
+            onPress={() => setIsPanelOpen(false)}
+            activeOpacity={1}
+          />
+        )}
 
-      {/* ✅ User Slide-in Panel */}
-      <Animated.View
-        style={[styles.panel, { transform: [{ translateX: panelPosition }] }]}
-      >
-        <SafeAreaView style={styles.panelContent}>
-          {/* Header with Back + Title */}
-          <View style={styles.panelHeader}>
-            <TouchableOpacity
-              onPress={() => setIsPanelOpen(false)}
-              style={{ padding: 4 }}
-            >
-              <Ionicons name="arrow-back" size={24} color="#fff" />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>WatchParty</Text>
-            <View style={{ width: 24 }} />
-          </View>
-
-          {/* Profile Section */}
-          <View style={styles.profileSection}>
-            <Ionicons name="person-circle" size={80} color="limegreen" />
-            <Text style={styles.username}>Username</Text>
-          </View>
-
-          {/* Menu List */}
-          <View style={styles.menuList}>
-            {menuItems.map((item) => (
+        {/* ✅ User Slide-in Panel */}
+        <Animated.View
+          style={[styles.panel, { transform: [{ translateX: panelPosition }] }]}
+        >
+          <SafeAreaView style={styles.panelContent}>
+            {/* Header with Back + Title */}
+            <View style={styles.panelHeader}>
               <TouchableOpacity
-                key={item.id}
-                style={styles.menuItem}
-                onPress={() => console.log(`${item.title} pressed`)}
+                onPress={() => setIsPanelOpen(false)}
+                style={{ padding: 4 }}
               >
-                <View style={styles.menuLeft}>
-                  <Ionicons name={item.icon} size={22} color="#fff" />
-                  <Text style={styles.menuText}>{item.title}</Text>
-                </View>
-                <Ionicons name="chevron-forward" size={20} color="#fff" />
+                <Ionicons name="arrow-back" size={24} color="#fff" />
               </TouchableOpacity>
-            ))}
-          </View>
 
-          {/* Footer Logout Button */}
-          <View style={styles.footer}>
-            <TouchableOpacity
-              style={styles.logoutButton}
-              onPress={handleLogout}
-            >
-              <Text style={styles.logoutText}>Log out</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      </Animated.View>
+              <TouchableOpacity
+                onPress={HandleHome}
+                style={{ paddingHorizontal: 10 }}
+              >
+                <Text style={styles.headerTitle}>WatchParty</Text>
+              </TouchableOpacity>
+              <View style={{ width: 24 }} />
+            </View>
+
+            {/* Profile Section */}
+            <View style={styles.profileSection}>
+              <Ionicons name="person-circle" size={80} color="limegreen" />
+              <Text style={styles.username}>Username</Text>
+            </View>
+
+            {/* Menu List */}
+            <View style={styles.menuList}>
+              {menuItems.map((item) => (
+                <TouchableOpacity
+                  key={item.id}
+                  style={styles.menuItem}
+                  onPress={() => console.log(`${item.title} pressed`)}
+                >
+                  <View style={styles.menuLeft}>
+                    <Ionicons name={item.icon} size={22} color="#fff" />
+                    <Text style={styles.menuText}>{item.title}</Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={20} color="#fff" />
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Footer Logout Button */}
+            <View style={styles.footer}>
+              <TouchableOpacity
+                style={styles.logoutButton}
+                onPress={handleLogout}
+              >
+                <Text style={styles.logoutText}>Log out</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </Animated.View>
+      </View>
 
       {/* ✅ SlideMenu (Genres) */}
       {isMenuOpen && <SlideMenu onClose={() => setIsMenuOpen(false)} />}
