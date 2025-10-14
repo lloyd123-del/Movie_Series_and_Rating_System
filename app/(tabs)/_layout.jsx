@@ -57,7 +57,6 @@ export default function Layout() {
     { id: 1, title: "Watchlist", icon: "clipboard-outline" },
     { id: 2, title: "Liked", icon: "thumbs-up-outline" },
     { id: 3, title: "Account", icon: "person-outline" },
-    { id: 4, title: "App Settings", icon: "settings-outline" },
     { id: 5, title: "Help", icon: "help-circle-outline" },
   ];
 
