@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 const { width } = Dimensions.get("window");
 
 const posters = [
-  require("../../assets/images/dexter.jpeg"),
+  require("../../assets/images/DexterResurrection.jpeg"),
   require("../../assets/images/peacemaker.jpeg"),
   require("../../assets/images/better.jpeg"),
   require("../../assets/images/june.jpeg"),

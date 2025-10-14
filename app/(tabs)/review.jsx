@@ -17,7 +17,7 @@ const ShowDetails = () => {
     <ScrollView style={styles.container}>
 
       <Image
-        source={require("../../assets/images/DexterResurrection.jpg")}
+        source={require("../../assets/images/DexterResurrection.jpeg")}
         style={styles.poster}
         resizeMode="cover"
       />
