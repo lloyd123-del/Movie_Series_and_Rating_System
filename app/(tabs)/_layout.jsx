@@ -62,12 +62,12 @@ export default function Layout() {
   };
 
   const handleMenuPress = (title) => {
-    setIsPanelOpen(false); // close the side panel
+    setIsPanelOpen(false); 
 
     if (title === "Watchlist") {
-      router.push("/watchlist"); // ✅ go to your Watchlist screen
+      router.push("/watchlist"); 
     } else if (title === "Liked") {
-      router.push("/liked");
+      router.push("/like");
     } else if (title === "Account") {
       router.push("/account");
     } else if (title === "Help") {
