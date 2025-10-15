@@ -17,6 +17,14 @@ import SlideMenu from "./SlideMenu";
 
 const { width } = Dimensions.get("window");
 
+const menuItems = [
+  { id: 1, title: "Watchlist", icon: "clipboard-outline" },
+  { id: 2, title: "Liked", icon: "thumbs-up-outline" },
+  { id: 3, title: "Account", icon: "person-outline" },
+  { id: 4, title: "Help", icon: "help-circle-outline" },
+];
+
+
 export default function Layout() {
   const router = useRouter();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -53,12 +61,19 @@ export default function Layout() {
     router.replace("/"); 
   };
 
-  const menuItems = [
-    { id: 1, title: "Watchlist", icon: "clipboard-outline" },
-    { id: 2, title: "Liked", icon: "thumbs-up-outline" },
-    { id: 3, title: "Account", icon: "person-outline" },
-    { id: 5, title: "Help", icon: "help-circle-outline" },
-  ];
+  const handleMenuPress = (title) => {
+    setIsPanelOpen(false); // close the side panel
+
+    if (title === "Watchlist") {
+      router.push("/watchlist"); // ✅ go to your Watchlist screen
+    } else if (title === "Liked") {
+      router.push("/liked");
+    } else if (title === "Account") {
+      router.push("/account");
+    } else if (title === "Help") {
+      router.push("/help");
+    }
+  };
 
   return (
     <>
@@ -150,8 +165,9 @@ export default function Layout() {
                 <TouchableOpacity
                   key={item.id}
                   style={styles.menuItem}
-                  onPress={() => console.log(`${item.title} pressed`)}
+                  onPress={() => handleMenuPress(item.title)}
                 >
+
                   <View style={styles.menuLeft}>
                     <Ionicons name={item.icon} size={22} color="#fff" />
                     <Text style={styles.menuText}>{item.title}</Text>
