@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   menuList: {
     flex: 1,
     paddingHorizontal: 10,
+    marginTop: 20,
   },
   menuItem: {
     flexDirection: "row",
