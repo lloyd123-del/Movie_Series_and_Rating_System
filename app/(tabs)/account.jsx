@@ -27,7 +27,7 @@ export default function Account() {
       {/* Profile Section */}
       <View style={styles.profileSection}>
         <TouchableOpacity style={styles.iconButton}>
-          <Ionicons name="person-circle-outline" size={100} color="#fff" />
+          <Ionicons name="person-circle-outline" size={100} color="#00ff22ff" />
         </TouchableOpacity>
 
         <TextInput
@@ -64,7 +64,7 @@ export default function Account() {
         </View>
       </View>
 
-      {/* Save Button */}
+
       <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity>

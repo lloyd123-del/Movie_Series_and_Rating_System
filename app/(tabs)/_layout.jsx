@@ -21,7 +21,6 @@ const menuItems = [
   { id: 1, title: "Watchlist", icon: "clipboard-outline" },
   { id: 2, title: "Liked", icon: "thumbs-up-outline" },
   { id: 3, title: "Account", icon: "person-outline" },
-  { id: 4, title: "Help", icon: "help-circle-outline" },
 ];
 
 
@@ -70,9 +69,7 @@ export default function Layout() {
       router.push("/like");
     } else if (title === "Account") {
       router.push("/account");
-    } else if (title === "Help") {
-      router.push("/help");
-    }
+    } 
   };
 
   return (
