@@ -23,7 +23,7 @@ const moviesSchema = new mongoose.Schema({
   },
 
   duration: {
-    type: Number, 
+    type: String, 
   },
 
   director: {
@@ -31,10 +31,10 @@ const moviesSchema = new mongoose.Schema({
     trim: true
   },
 
-  posteImage: {
-    type: String,
-    required: true
-  },
+  //posterImage: {
+ //   type: String,
+ //   required: true
+ // },
 
 
   reviews: [
