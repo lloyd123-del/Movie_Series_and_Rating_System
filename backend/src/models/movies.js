@@ -31,11 +31,10 @@ const moviesSchema = new mongoose.Schema({
     trim: true
   },
 
-  //posterImage: {
- //   type: String,
- //   required: true
- // },
-
+  posterUrl: {
+    type: String,
+    default: ""
+  },
 
   reviews: [
     {
@@ -60,7 +59,6 @@ const moviesSchema = new mongoose.Schema({
       }
     }
   ],
-
 
   averageRating: {
     type: Number,

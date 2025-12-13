@@ -62,12 +62,13 @@ router.post("/register", async(req, res) => {
     }
 });
 
-router.get("/login", async(req, res) => {
+// FIXED: Changed from GET to POST
+router.post("/login", async(req, res) => {
     try {
         
         const {email, password} = req.body;
 
-        if(!email || !password) return req.status(400).json({message: "All fields required"});
+        if(!email || !password) return res.status(400).json({message: "All fields required"});
 
         const user = await User.findOne({email});
         if(!user) return res.status(400).json({message: "Invalid Credentials"});
@@ -76,7 +77,7 @@ router.get("/login", async(req, res) => {
         if(!isPasswordCorrect) return res.status(400).json({message: "Invalid Credentials"});
 
         const token = generateToken(user._id);
-        res.status(201).json({
+        res.status(200).json({
             token,
             user:{
                 _id: user._id,
@@ -92,4 +93,4 @@ router.get("/login", async(req, res) => {
     }
 });
 
- export default router;
+export default router;
