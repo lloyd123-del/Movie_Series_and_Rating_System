@@ -1,15 +1,14 @@
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  SafeAreaView,
-} from "react-native";
-import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const { width } = Dimensions.get("window");
 

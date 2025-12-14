@@ -1,5 +1,5 @@
-import { Link, useRouter } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { Link, useRouter } from "expo-router";
+import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -9,47 +9,42 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View
+  View,
 } from 'react-native';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from './context/AuthContext';
 
-// ⚠️ CHANGE THIS TO YOUR BACKEND IP ADDRESS
+// ⚠️ YOUR BACKEND PORT
 const API_URL = 'http://10.0.2.2:3000/api';
-// For Android Emulator use: 'http://10.0.2.2:3001/api'
-// For iOS Simulator use: 'http://localhost:3001/api'
 
-const index = () => {
+export default function Login() {
   const router = useRouter();
-  const { login, isAuthenticated } = useAuth();
-  
-  const opacity = useRef(new Animated.Value(0)).current;
-  
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true
-    }).start();
-  }, []);
+  const scale = useRef(new Animated.Value(0)).current; 
+  const translateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.replace("/(tabs)/home");
-    }
-  }, [isAuthenticated]);
+    Animated.sequence([
+      Animated.spring(scale, {
+        toValue: 1,
+        friction: 4,
+        tension: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: -330,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
 
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields');
-      return;
-    }
-
-    if (!email.includes('@')) {
-      Alert.alert('Error', 'Please enter a valid email address');
       return;
     }
 
@@ -61,26 +56,21 @@ const index = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: email.trim().toLowerCase(),
-          password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         await login(data.user, data.token);
-        router.replace("/(tabs)/home");
+        Alert.alert('Success', 'Login successful!');
+        router.replace('/(tabs)/home');
       } else {
-        Alert.alert('Login Failed', data.message || 'Invalid credentials');
+        Alert.alert('Error', data.message || 'Login failed');
       }
     } catch (error) {
       console.error('Login error:', error);
-      Alert.alert(
-        'Connection Error', 
-        'Could not connect to server. Please check your internet connection and make sure the backend is running.'
-      );
+      Alert.alert('Error', 'Could not connect to server');
     } finally {
       setIsLoading(false);
     }
@@ -88,31 +78,39 @@ const index = () => {
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require('../assets/images/WatchPartyLogo.png')}
-        style={styles.topLogo} 
+      <Animated.Image
+        source={require(".../assets/images/WatchPartyLogo.png")}
+        style={[
+          styles.topLogo,
+          {
+            transform: [
+              { scale: scale },
+              { translateY: translateY }
+            ],
+          },
+        ]}
       />
-      <Text style={styles.title1}>WatchParty</Text>
-      
-      <Animated.View style={[styles.loginCard, {opacity}]}>
+
+      <Animated.View style={[styles.loginCard]}>
         <View style={styles.TopImageContainer}>
-          <Image 
-            source={require('../assets/images/videologo.png')}
+          <Image
+            source={require(".../assets/images/WatchParty.png")}
             style={styles.logo}
           />
-        </View>  
-        <Text style={styles.title1}>Welcome Back!</Text>
-        <Text style={styles.title2}>Sign in to your account</Text>
+        </View>
 
-        <Text style={styles.title3}>Email</Text>
+        <Text style={styles.title1}>Login</Text>
+        <Text style={styles.title2}>Welcome back to WatchParty!</Text>
+
+        <Text style={styles.title3}>Email Address</Text>
         <TextInput
           style={styles.input}
           placeholder="Email"
           placeholderTextColor="#A0A0A0"
+          keyboardType="email-address"
+          autoCapitalize="none"
           value={email}
           onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
           editable={!isLoading}
         />
 
@@ -140,7 +138,6 @@ const index = () => {
           />
         )}
 
-        <Text style={styles.title4}>Forgot your Password?</Text>
         <View style={styles.divider} />
 
         <Text style={styles.title5}>Don't have an Account?</Text>
@@ -160,34 +157,33 @@ const index = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0D0D0D', 
-    justifyContent: 'center',   
-    alignItems: 'center'        
+    backgroundColor: '#0D0D0D',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   topLogo: {
     width: 120,
     height: 120,
-    justifyContent: "center", 
-    alignItems: "center",     
+    justifyContent: "center",
+    alignItems: "center",
   },
   loginCard: {
     width: 321,
-    height: 605,
+    maxHeight: 650,
     padding: 20,
-    backgroundColor: '#1A1A1A', 
+    backgroundColor: '#1A1A1A',
     borderRadius: 30,
-    marginTop: 30
+    marginTop: 20,
+    marginBottom: 20
   },
-  TopImageContainer: {
-    // Blank
-  },
+  TopImageContainer: {},
   logo: {
     width: 39,
     height: 33,
     marginLeft: 125
   },
   title1: {
-    color: '#FFFFFF', 
+    color: '#FFFFFF',
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -197,7 +193,7 @@ const styles = StyleSheet.create({
     color: '#A0A0A0',
     fontSize: 10,
     fontWeight: 'bold',
-    marginBottom: 60,
+    marginBottom: 30,
     textAlign: 'center'
   },
   title3: {
@@ -206,13 +202,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     marginBottom: 5
-  },
-  title4: {
-    color: '#A0A0A0',
-    fontSize: 10,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 50
   },
   title5: {
     color: '#A0A0A0',
@@ -229,11 +218,11 @@ const styles = StyleSheet.create({
     color: '#000000ff',
     borderRadius: 8,
     padding: 5,
-    marginBottom: 30
+    marginBottom: 20
   },
   divider: {
     height: 1,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
     width: '100%',
     marginVertical: 20
   },
@@ -248,5 +237,3 @@ const styles = StyleSheet.create({
     fontSize: 14,
   }
 });
-
-export default index;

@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -56,8 +57,23 @@ export default function Layout() {
     }
   }, [isPanelOpen]);
 
-  const handleLogout = () => {
-    router.replace("/"); 
+  // ONLY CHANGE: Fixed logout function
+  const handleLogout = async () => {
+    try {
+      // Close panel first
+      setIsPanelOpen(false);
+      
+      // Wait for animation
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Clear storage
+      await AsyncStorage.clear();
+      
+      // Go to login
+      router.replace("/login");
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const handleMenuPress = (title) => {

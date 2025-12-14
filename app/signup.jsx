@@ -12,14 +12,12 @@ import {
   TextInput,
   View
 } from 'react-native';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from './context/AuthContext';
 
 // ⚠️ CHANGE THIS TO YOUR BACKEND IP ADDRESS
 const API_URL = 'http://10.0.2.2:3000/api';
-// For Android Emulator use: 'http://10.0.2.2:3001/api'
-// For iOS Simulator use: 'http://localhost:3001/api'
 
-const index = () => {
+export default function Signup() {
   const router = useRouter();
   const { login, isAuthenticated } = useAuth();
   
@@ -117,16 +115,15 @@ const index = () => {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('../assets/images/WatchPartyLogo.png')}
+        source={require('.../assets/images/WatchPartyLogo.png')}
         style={styles.topLogo} 
       />
-      <Text style={styles.title1}>WatchParty</Text>
       
       <Animated.View style={[styles.loginCard, {opacity}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.TopImageContainer}>
             <Image 
-              source={require('../assets/images/videologo.png')}
+              source={require('.../assets/images/WatchParty.png')}
               style={styles.logo}
             />
           </View>  
@@ -293,5 +290,3 @@ const styles = StyleSheet.create({
     fontSize: 14,
   }
 });
-
-export default index;

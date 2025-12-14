@@ -1,58 +1,60 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from "expo-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Animated, StyleSheet, View } from "react-native";
-import { useAuth } from "./context/AuthContext";
 
 export default function Index() {
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuth();
-
+  const [hasChecked, setHasChecked] = useState(false);
+  
   const scale = useRef(new Animated.Value(0)).current; 
   const translateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Play animation
-    Animated.sequence([
-      Animated.spring(scale, {
-        toValue: 1,
-        friction: 4,
-        tension: 50,
-        useNativeDriver: true,
-      }),
-      Animated.timing(translateY, {
-        toValue: -330,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      // After animation, check authentication
-      if (!isLoading) {
-        if (isAuthenticated) {
-          console.log('User is authenticated, going to home');
-          router.replace("/(tabs)/home");
-        } else {
-          console.log('User not authenticated, going to login');
-          router.replace("/login");
-        }
-      }
-    });
+    checkAuthAndRedirect();
   }, []);
 
-  // Also check when loading state changes
-  useEffect(() => {
-    if (!isLoading) {
-      // Small delay to let animation finish
-      setTimeout(() => {
-        if (isAuthenticated) {
-          console.log('User is authenticated, going to home');
-          router.replace("/(tabs)/home");
-        } else {
-          console.log('User not authenticated, going to login');
-          router.replace("/login");
-        }
-      }, 1000);
+  const checkAuthAndRedirect = async () => {
+    try {
+      // Play animation first
+      await new Promise((resolve) => {
+        Animated.sequence([
+          Animated.spring(scale, {
+            toValue: 1,
+            friction: 4,
+            tension: 50,
+            useNativeDriver: true,
+          }),
+          Animated.timing(translateY, {
+            toValue: -330,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ]).start(resolve);
+      });
+
+      // Check AsyncStorage directly
+      const token = await AsyncStorage.getItem('token');
+      const user = await AsyncStorage.getItem('user');
+      
+      console.log('=== INDEX.JSX CHECK ===');
+      console.log('Token exists:', !!token);
+      console.log('User exists:', !!user);
+
+      if (token && user) {
+        console.log('User is logged in, going to home');
+        router.replace("/(tabs)/home");
+      } else {
+        console.log('No user found, going to login');
+        router.replace("/login");
+      }
+      
+      setHasChecked(true);
+    } catch (error) {
+      console.error('Error checking auth:', error);
+      router.replace("/login");
     }
-  }, [isLoading, isAuthenticated]);
+  };
 
   return (
     <View style={styles.container}>

@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "../context/AuthContext";
 
 // ⚠️ CHANGE THIS TO YOUR BACKEND IP ADDRESS
 const API_URL = 'http://10.0.2.2:3000/api';

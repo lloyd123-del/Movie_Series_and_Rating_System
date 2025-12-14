@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { AuthProvider } from "./context/AuthContext";
+import AuthProvider from "./context/AuthContext";
 
 export default function RootLayout() {
   return (
@@ -8,7 +8,6 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="login" />
         <Stack.Screen name="signup" />
-        <Stack.Screen name="review" />
         <Stack.Screen name="(tabs)" />
       </Stack>
     </AuthProvider>
