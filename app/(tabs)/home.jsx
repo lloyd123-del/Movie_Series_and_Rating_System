@@ -98,11 +98,6 @@ const home = () => {
     });
   };
 
-  const handleLogout = async () => {
-    await AsyncStorage.clear();
-    router.replace('/login');
-  };
-
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -124,9 +119,6 @@ const home = () => {
           Add movies to your database using Postman.{'\n\n'}
           Check POSTMAN_GUIDE.md for instructions.
         </Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -138,13 +130,6 @@ const home = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>WatchParty</Text>
-        <TouchableOpacity onPress={handleLogout} style={styles.headerLogout}>
-          <Text style={styles.headerLogoutText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentBox}>
           {/* Hero Banner */}
@@ -284,29 +269,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0D0D0D",
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    paddingTop: 60,
-    backgroundColor: '#1A1A1A',
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  headerLogout: {
-    backgroundColor: '#E50914',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 5,
-  },
-  headerLogoutText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
   loadingContainer: {
     flex: 1,
     backgroundColor: "#0D0D0D",
@@ -337,17 +299,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 30,
-  },
-  logoutButton: {
-    backgroundColor: '#E50914',
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    borderRadius: 8,
-  },
-  logoutButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   contentBox: {
     backgroundColor: "#1A1A1A",

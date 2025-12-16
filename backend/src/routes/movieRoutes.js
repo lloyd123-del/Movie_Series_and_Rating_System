@@ -13,6 +13,7 @@ router.post("/add", async (req, res) => {
             description,
             duration,
             director,
+            posterUrl
         } = req.body;
 
         if (!title || !genre || !releaseYear) {
@@ -28,6 +29,7 @@ router.post("/add", async (req, res) => {
             description,
             duration,
             director,
+            posterUrl: posterUrl || "" // Include posterUrl
         });
 
         await movie.save();

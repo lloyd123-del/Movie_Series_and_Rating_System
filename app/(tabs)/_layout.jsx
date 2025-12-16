@@ -38,7 +38,7 @@ export default function Layout() {
   const panelPosition = useRef(new Animated.Value(width)).current;
 
   const HandleHome = () => {
-    setIsPanelOpen(false); 
+    setIsPanelOpen(true); 
     router.replace("/(tabs)/home");
   };
 
