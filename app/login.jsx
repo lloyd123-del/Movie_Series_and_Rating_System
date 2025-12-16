@@ -1,9 +1,8 @@
 import { Link, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Animated,
   Button,
   Image,
   StyleSheet,
@@ -22,25 +21,6 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const scale = useRef(new Animated.Value(0)).current; 
-  const translateY = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.sequence([
-      Animated.spring(scale, {
-        toValue: 1,
-        friction: 4,
-        tension: 50,
-        useNativeDriver: true,
-      }),
-      Animated.timing(translateY, {
-        toValue: -330,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, []);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -78,29 +58,22 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Animated.Image
-        source={require(".../assets/images/WatchPartyLogo.png")}
-        style={[
-          styles.topLogo,
-          {
-            transform: [
-              { scale: scale },
-              { translateY: translateY }
-            ],
-          },
-        ]}
+      {/* Static Logo (NO animation) */}
+      <Image
+        source={require("../assets/images/WatchPartyLogo.png")}
+        style={styles.topLogo}
       />
 
-      <Animated.View style={[styles.loginCard]}>
+      <View style={styles.loginCard}>
         <View style={styles.TopImageContainer}>
           <Image
-            source={require(".../assets/images/WatchParty.png")}
+            source={require("../assets/images/videologo.png")}
             style={styles.logo}
           />
         </View>
 
-        <Text style={styles.title1}>Login</Text>
-        <Text style={styles.title2}>Welcome back to WatchParty!</Text>
+        <Text style={styles.title1}>Welcome Back!</Text>
+        <Text style={styles.title2}>Login to WatchParty!</Text>
 
         <Text style={styles.title3}>Email Address</Text>
         <TextInput
@@ -149,7 +122,7 @@ export default function Login() {
             disabled={isLoading}
           />
         </Link>
-      </Animated.View>
+      </View>
     </View>
   );
 }
@@ -164,8 +137,7 @@ const styles = StyleSheet.create({
   topLogo: {
     width: 120,
     height: 120,
-    justifyContent: "center",
-    alignItems: "center",
+    marginBottom: 20,
   },
   loginCard: {
     width: 321,

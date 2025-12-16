@@ -45,7 +45,7 @@ export default function SlideMenu({ onClose }) {
   const router = useRouter();
 
   const Handlegenre = () => {
-    router.replace("/genre");
+    router.replace("/(tabs)/genre");
   }
 
   return (

@@ -115,7 +115,7 @@ export default function Signup() {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('.../assets/images/WatchPartyLogo.png')}
+        source={require("../assets/images/WatchPartyLogo.png")}
         style={styles.topLogo} 
       />
       
@@ -123,7 +123,7 @@ export default function Signup() {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.TopImageContainer}>
             <Image 
-              source={require('.../assets/images/WatchParty.png')}
+              source={require("../assets/images/videologo.png")}
               style={styles.logo}
             />
           </View>  

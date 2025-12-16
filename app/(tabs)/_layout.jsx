@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from "expo-router";
+import { Slot } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -38,7 +39,7 @@ export default function Layout() {
 
   const HandleHome = () => {
     setIsPanelOpen(false); 
-    router.replace("/home"); 
+    router.replace("/(tabs)/home");
   };
 
   useEffect(() => {
@@ -80,11 +81,11 @@ export default function Layout() {
     setIsPanelOpen(false); 
 
     if (title === "Watchlist") {
-      router.push("/watchlist"); 
+      router.push("/(tabs)/watchlist"); 
     } else if (title === "Liked") {
-      router.push("/like");
+      router.push("/(tabs)/like");
     } else if (title === "Account") {
-      router.push("/account");
+      router.push("/(tabs)/account");
     } 
   };
 
